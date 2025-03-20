@@ -3,6 +3,9 @@ import {makeWASocket, Browsers, useMultiFileAuthState } from "baileys";
 import  P  from "pino";
 import fs from 'fs';
 import { exec } from "child_process";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 function isInstagramVideo(message) {
@@ -37,7 +40,6 @@ async function downloadVideo(link, fileLoc) {
 }
 
 
-
 async function connectToWhatsapp() {
 
     //the auth folder which will created contains login info so we don't have to login each time we restart the bot
@@ -68,7 +70,6 @@ async function connectToWhatsapp() {
         const text = msg.message.conversation || msg.message.extendedTextMessage?.text;
         if (!text) return;
 
-
         if (isInstagramVideo(text) == false) {
             console.log("not an instagram link");
             return;
@@ -76,14 +77,17 @@ async function connectToWhatsapp() {
 
         console.log("downloading:", text);
 
-        //need to make it using .env later
         //basically this is the file location where the temporary files get's stored and it makes the timestamp as file name
         //change it as your own preference
-        const fileLocation = `/home/tushar/temp/${Date.now()}.mp4`
+        const fileLocation = `${process.env.location}${Date.now()}.mp4`
 
-        await downloadVideo(text, fileLocation);
-
-        console.log("download complete:", fileLocation);
+        try {
+            await downloadVideo(text, fileLocation);
+            console.log("video downloaded at ", fileLocation);
+        }
+        catch (error) {
+            console.error("error downloading video: ", error)
+        }
 
         // need to handle errors later
         sock.sendMessage(msg.key.remoteJid, {
@@ -100,7 +104,5 @@ async function connectToWhatsapp() {
 
     return sock;
 }
-
-
 
 connectToWhatsapp()
