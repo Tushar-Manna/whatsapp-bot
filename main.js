@@ -8,10 +8,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-function isInstagramVideo(message) {
-    const instaVideoRegex = /https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/[a-zA-Z0-9_-]+/;
-    //returns a boolean value indicating if the message contains an instagram link or not
-    return instaVideoRegex.test(message);
+function IsFbOrInstaVideo(message) {
+    const IsFbOrInstaVideoRegx = /https?:\/\/(www\.)?(instagram\.com\/(p|reel|tv)\/|facebook\.com\/(watch\/\?v=|reel\/|video\.php\?v=|share\/r\/|story\.php\?story_fbid=))[a-zA-Z0-9_-]+/;
+    //returns a boolean value indicating if the message contains an instagram/fb link or not
+    return IsFbOrInstaVideoRegx.test(message);
 }
 
 
@@ -70,8 +70,8 @@ async function connectToWhatsapp() {
         const text = msg.message.conversation || msg.message.extendedTextMessage?.text;
         if (!text) return;
 
-        if (isInstagramVideo(text) == false) {
-            console.log("not an instagram link");
+        if (IsFbOrInstaVideo(text) == false) {
+            console.log("not an fb or instagram link");
             return;
         }
 
