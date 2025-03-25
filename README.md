@@ -14,7 +14,7 @@ setup .env
 
 ![.env example](/images/dotenv.png)
 put your temporary file location where the files will be stored before sending is this format
-!important --> do not forge to put "/" or "\" at the end otherwise you will get error
+!important --> do not forget to put "/" or "\" at the end otherwise you will get error
 
 ### step 2
 download yt-dlp and ffmpeg
