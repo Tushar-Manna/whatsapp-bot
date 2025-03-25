@@ -1,31 +1,131 @@
-This whatsapp bot currently detects for any instagram links downloads them and sends back to the user!
+# WhatsApp Instagram Video Downloader Bot
 
-### Basic info
-the first time you run the file main.js you will get an qr asking you to login, after login your login credentials get's stored in the auth folder. you might need to terminate the node session once after login then return to make it detect messages for now it only detects instagram links, I will add other apps later!
+<img src="https://img.shields.io/badge/Node.js-20%2B-green" alt="Node Version">
 
-### Perquisites 
-you need node version 20+
-yt-dlp version 2025+
-latest ffmpeg version
-any version below that may cause unknown errors!
+A WhatsApp bot that automatically detects Instagram links, downloads videos, and sends them back to users.
 
-### Step 1
-setup .env
+## Features
+- Automatic Instagram link detection (Posts, Reels, Stories)
+- Video downloading using yt-dlp
+- Session persistence with encrypted credentials
+- Automatic temporary file cleanup
+- Cross-platform support (Windows/Linux)
 
-![.env example](/images/dotenv.png)
-put your temporary file location where the files will be stored before sending is this format
-!important --> do not forget to put "/" or "\" at the end otherwise you will get error
+## Prerequisites
+- Node.js v20+
+- yt-dlp 2025+
+- FFmpeg (latest stable version)
+- WhatsApp mobile app (for initial QR scan)
 
-### step 2
-download yt-dlp and ffmpeg
+## Installation
 
-I have currently tested it with windows and a few debian based linux systems
-You are welcome to test and contribute with other OS!
+### 1. Clone Repository
+```bash
+git clone https://github.com/yourusername/whatsapp-video-bot.git
+cd whatsapp-video-bot
+```
 
-Windows --> 
-if you are on windows put "winget yt-dlp" to your command line it automatically adds ffmpeg as dependency. that's pretty much it!
-also after installing yt-dlp please restart your windows machine once to make it work properly
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-Debian -->
-if you are on any debian bases system you might need to install yt-dlp and ffmpeg separately.
-and be careful as the standard "sudo apt" provides you with outdated packages so I recommend going to their official github repos to get the latest packages
+### 3. Environment Setup
+Create `.env` file in root directory:
+```env
+LOCATION=./temp/  # Always include trailing slash
+```
+
+### 4. Tool Installation
+
+#### Windows Users
+```powershell
+winget install yt-dlp
+```
+**Restart your computer after installation**
+
+#### Debian/Ubuntu Users
+```bash
+# Install yt-dlp
+sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+sudo chmod a+rx /usr/local/bin/yt-dlp
+
+# Install FFmpeg
+sudo apt update
+sudo apt install ffmpeg
+```
+
+## Usage
+
+1. Start the bot:
+```bash
+node main.js
+```
+
+2. Scan QR code using WhatsApp mobile app:
+   - Open WhatsApp → Settings → Linked Devices → Link a Device
+
+3. Send Instagram link to bot:
+   ```
+   https://www.instagram.com/reel/CxYzABC123/
+   ```
+
+4. Receive downloaded video within 1-2 minutes
+
+## Configuration
+
+Edit `.env` file:
+```env
+# Required
+LOCATION=./temp/
+
+# Optional Proxy Configuration
+# PROXY=http://yourproxy:8080
+# USER_AGENT="Mozilla/5.0 ..."
+```
+
+## Supported Systems
+| OS           | Status      | Notes                  |
+|--------------|-------------|------------------------|
+| Windows 10/11| Verified    | Requires winget        |
+| Ubuntu 22.04 | Verified    | Needs manual updates   |
+| macOS        | Untested    | Community help needed  |
+
+## Troubleshooting
+
+### Common Issues
+1. **"Command not found" errors**
+   - Verify installation paths
+   - Reinstall yt-dlp/FFmpeg
+
+2. **Login session expires**
+   - Delete `auth` folder and restart bot
+
+3. **Large file failures**
+```env
+NODE_OPTIONS=--max-old-space-size=4096
+```
+
+## Contributing
+
+We welcome contributions! Current priorities:
+
+- [ ] Add Facebook support
+- [ ] Implement YouTube Shorts download
+- [ ] Improve error handling
+- [ ] Add progress tracking
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
+
+
+
+---
+
+**Important Notes**
+- First run requires QR login
+- Terminate and restart after initial setup
+- Temporary files auto-delete after sending
