@@ -33,7 +33,7 @@ npm install
 ### 3. Environment Setup
 Create `.env` file in root directory:
 ```env
-LOCATION=./temp/  # Always include trailing slash
+location="./temp/"  # Always include trailing slash
 ```
 
 ### 4. Tool Installation
@@ -77,7 +77,7 @@ node main.js
 Edit `.env` file:
 ```env
 # Required
-LOCATION=./temp/
+location="./temp/" # Always include trailing slash
 
 # Optional Proxy Configuration
 # PROXY=http://yourproxy:8080
