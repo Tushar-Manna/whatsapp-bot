@@ -4,8 +4,7 @@ import  P  from "pino";
 import fs from 'fs';
 import { exec } from "child_process";
 import dotenv from 'dotenv';
-
-dotenv.config();
+import { text } from "stream/consumers";
 
 
 function IsFbOrInstaVideo(message) {
@@ -70,19 +69,20 @@ async function connectToWhatsapp() {
         const text = msg.message.conversation || msg.message.extendedTextMessage?.text;
         if (!text) return;
 
-        if (IsFbOrInstaVideo(text) == false) {
-            console.log("not an fb or instagram link");
+        if(!text.startsWith("/download ") || !IsFbOrInstaVideo(text.replace("/download ", ""))) {
+            console.log("not an fb or instagram link or Invaild Prefix");
             return;
         }
 
-        console.log("downloading:", text);
+
+        console.log("downloading:", text.replace("/download ", ""));
 
         //basically this is the file location where the temporary files get's stored and it makes the timestamp as file name
         //change it as your own preference
         const fileLocation = `${process.env.location}${Date.now()}.mp4`
 
         try {
-            await downloadVideo(text, fileLocation);
+            await downloadVideo(text.replace("/download ", ""), fileLocation);
             console.log("video downloaded at ", fileLocation);
         }
         catch (error) {
