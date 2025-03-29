@@ -9,7 +9,7 @@ dotenv.config();
 
 
 function IsFbOrInstaVideo(message) {
-    const IsFbOrInstaVideoRegx = /https?:\/\/(www\.)?(instagram\.com\/(p|reel|tv)\/|facebook\.com\/(watch\/\?v=|reel\/|video\.php\?v=|share\/r\/|story\.php\?story_fbid=))[a-zA-Z0-9_-]+/;
+    const IsFbOrInstaVideoRegx = /https?:\/\/(?:www\.)?(?:instagram\.com\/(?:p|reel|tv)\/|facebook\.com\/(?:watch\/\?v=|reel\/|video\.php\?v=|share\/r\/|story\.php\?story_fbid=)|youtube\.com\/shorts\/)[a-zA-Z0-9_-]+/;
     //returns a boolean value indicating if the message contains an instagram/fb link or not
     return IsFbOrInstaVideoRegx.test(message);
 }
