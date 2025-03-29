@@ -78,10 +78,6 @@ Edit `.env` file:
 ```env
 # Required
 LOCATION=./temp/
-
-# Optional Proxy Configuration
-# PROXY=http://yourproxy:8080
-# USER_AGENT="Mozilla/5.0 ..."
 ```
 
 ## Supported Systems
